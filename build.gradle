@@ -23,7 +23,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    implementation project(':BPositiveCommon')
+    implementation project(':BPositiveCommon:BPositiveModel')
     implementation 'org.openjfx:javafx-controls:17' // Am actualizat aici versiunea la 17
     implementation 'org.openjfx:javafx-fxml:17'
 

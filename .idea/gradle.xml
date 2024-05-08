@@ -8,6 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/BPositiveCommon" />
+            <option value="$PROJECT_DIR$/BPositiveCommon/BPositiveModel" />
           </set>
         </option>
       </GradleProjectSettings>
