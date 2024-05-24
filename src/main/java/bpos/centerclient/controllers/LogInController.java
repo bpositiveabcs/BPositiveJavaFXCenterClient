@@ -1,7 +1,12 @@
 package bpos.centerclient.controllers;
 
-import bpos.centerclient.services.ClientService;
+import bpos.centerclient.RestComunication.services.ClientService;
 
+import bpos.common.model.Center;
+import bpos.common.model.LogInfo;
+import bpos.common.model.Person;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,12 +29,18 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import kong.unirest.Unirest;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 public class LogInController {
+    private static final String BASE_URL ="http://localhost:55555/personActorService" ;
+
 
     @FXML
     private TextField usernameTextField;
@@ -53,7 +64,7 @@ public class LogInController {
     private String URI_WebSocket = "ws://localhost:8080/websocket-endpoint";
     private String URI_REST = "http://localhost:55555/api/common/login";
     private Stage stage;
-    private ClientService service;
+    private ClientService clientService;
 
 
     public void initialize() {
@@ -82,7 +93,7 @@ public class LogInController {
     }
 
     public void setProperties(ClientService server) {
-        this.service = server;
+        this.clientService = server;
     }
 
 
@@ -232,86 +243,124 @@ public class LogInController {
 //        });
 //    });
 
-    public void handleLogin() throws IOException, ServicesExceptions {
-        String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
+//    public void handleLogin() throws IOException, ServicesExceptions {
+//        String username = usernameTextField.getText();
+//        String password = passwordTextField.getText();
+//
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-admin.fxml"));
+//        Parent userViewParent = loader.load();
+//        CenterMainController userController = loader.getController();
+//
+//        LogInfo loginfo_user = service.findByUsernameLogInfo(username);
+//        if (!Objects.equals(loginfo_user.getPassword(), password)) {
+//            System.out.println("Password is not correct");
+//            passwordTextField.clear();
+//
+//            return;
+//        }
+//
+//        System.out.println(loginfo_user.toString());
+//        Optional<Center> user = service.login(loginfo_user);
+//
+//        if (user.isPresent() && user.get().getPersonLogInfo().getPassword().equals(password)) {
+//            System.out.println("Login successful");
+//
+//            userController.setServer(service);
+//            userController.setLoggedUser(user);
+//
+//            Scene userViewScene = new Scene(userViewParent);
+//            Stage stage = (Stage) usernameTextField.getScene().getWindow();
+//            stage.setScene(userViewScene);
+//            stage.show();
+//        } else {
+//            System.out.println("Login failed");
+//            passwordTextField.clear();
+//            usernameTextField.clear();
+//
+//        }
+//    }
+public void handleLogin(ActionEvent event) throws URISyntaxException, JsonProcessingException {
+    String username = usernameTextField.getText();
+    String password = passwordTextField.getText();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-admin.fxml"));
-        Parent userViewParent = loader.load();
-        MainController userController = loader.getController();
-
-        LogInfo loginfo_user = service.findByUsernameLogInfo(username);
-        if (!Objects.equals(loginfo_user.getPassword(), password)) {
-            System.out.println("Password is not correct");
-            passwordTextField.clear();
-
-            return;
-        }
-
-        System.out.println(loginfo_user.toString());
-        Optional<Person> user = service.login(loginfo_user, obs);
-
-        if (user.isPresent() && user.get().getPersonLogInfo().getPassword().equals(password)) {
-            System.out.println("Login successful");
-
-            userController.setServer(service);
-            userController.setLoggedUser(user);
-
-            Scene userViewScene = new Scene(userViewParent);
-            Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            stage.setScene(userViewScene);
-            stage.show();
-        } else {
-            System.out.println("Login failed");
-            passwordTextField.clear();
-            usernameTextField.clear();
-
-        }
+    Map<String, String> loginParams = new HashMap<>();
+    loginParams.put("username", username);
+    loginParams.put("password", password);
+    String requestBody = "";
+    // Convertirea Map într-un JSON String
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+        requestBody = objectMapper.writeValueAsString(loginParams);
+    } catch (JsonProcessingException e) {
+        throw new RuntimeException(e);
     }
-
-    @FXML
-    void handleLogIn(ActionEvent event) {
-        String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
-
-        Unirest.post(URI_REST)
-                .header("Content-Type", "application/json")
-                .body(new LogInRequest(username, password))
-                .asStringAsync(response -> {
-                    Platform.runLater(() -> {
-                        if (response.getStatus() == 200) {
-                            ObjectMapper mapper = new ObjectMapper();
-                            try {
-                                this.credentials = mapper.readValue(response.getBody(), LogInfo.class);
-                            } catch (JsonProcessingException e) {
-                                MessageAlert.showMessage(null, Alert.AlertType.ERROR, "Error", "Cannot parse credentials");
-                            }
-                            System.out.println("Logged in");
-                            openCenterView();
-                        } else {
-                            MessageAlert.showMessage(null, Alert.AlertType.ERROR, "Error", "Invalid username or password");
-                            System.out.println(response.getStatus());
-                        }
-                    });
-                });
-
-    }
-    private void openCenterView() {
-
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/views/librarian/librarianMain-view.fxml"));
-        Parent root= null;
+//
+    Center person = clientService.login(username, password);
+    if (person != null) {
+        System.out.println("Login successful");
         try {
-            root = fxmlLoader.load();
-        } catch (Exception e) {
+            handleLoginSuccess(username, password, person);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        CenterMainController controller = fxmlLoader.<CenterMainController>getController();
-        controller.setCenter(stage, credentials);
-        stage.setTitle("Librarian");
-        stage.setScene(new Scene(root ));
-        stage.show();
+    } else {
+        System.out.println("Login failed");
+        passwordTextField.clear();
+        usernameTextField.clear();
     }
+}
+private void handleLoginSuccess(String username, String password, Center person) throws IOException {
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/centre-screen.fxml"));
+    Parent userViewParent = loader.load();
+    CenterMainController userController = loader.getController();
+    if (!Objects.equals(person.getLogInfo().getPassword(), password)) {
+        System.out.println("Password is not correct");
+        passwordTextField.clear();
+        return;
+    }
+//    userController.setServer(clientService);
+//    userController.setLoggedUser(person);
+//
+//    Scene userViewScene = new Scene(userViewParent);
+//    Stage stage = (Stage) usernameTextField.getScene().getWindow();
+//    stage.setScene(userViewScene);
+//    stage.show();
+//
+//    System.out.println("Login failed");
+//    passwordTextField.clear();
+//    usernameTextField.clear();
+
+}
+
+//    @FXML
+//    void handleLogIn(ActionEvent event) {
+//        String username = usernameTextField.getText();
+//        String password = passwordTextField.getText();
+//
+//        Unirest.post(URI_REST)
+//                .header("Content-Type", "application/json")
+//                .body(new LogInRequest(username, password))
+//                .asStringAsync(response -> {
+//                    Platform.runLater(() -> {
+//                        if (response.getStatus() == 200) {
+//                            ObjectMapper mapper = new ObjectMapper();
+//                            try {
+//                                this.credentials = mapper.readValue(response.getBody(), LogInfo.class);
+//                            } catch (JsonProcessingException e) {
+//                                MessageAlert.showMessage(null, Alert.AlertType.ERROR, "Error", "Cannot parse credentials");
+//                            }
+//                            System.out.println("Logged in");
+//                            openCenterView();
+//                        } else {
+//                            MessageAlert.showMessage(null, Alert.AlertType.ERROR, "Error", "Invalid username or password");
+//                            System.out.println(response.getStatus());
+//                        }
+//                    });
+//                });
+//
+//    }
+
 
     public void setLogIn(Stage primaryStage) {
         this.stage = primaryStage;

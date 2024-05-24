@@ -5,7 +5,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../../../AN 2/MPP/BPositive-04.05/BPositive/bpositive.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/AN 2/MPP/BPositive-04.05/BPositive/bpositive.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

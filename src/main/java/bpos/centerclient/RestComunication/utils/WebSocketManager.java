@@ -1,4 +1,4 @@
-package bpos.centerclient.utils;
+package bpos.centerclient.RestComunication.utils;
 
 import org.springframework.messaging.converter.CompositeMessageConverter;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
