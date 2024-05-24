@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="880.0" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bpos.centerclient.controllers.CenterAddParticipationController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="880.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@add participare.png" />
+         </image></ImageView>
+      <TableView layoutX="27.0" layoutY="72.0" prefHeight="296.0" prefWidth="407.0">
+        <columns>
+          <TableColumn prefWidth="118.4000244140625" text="Student" />
+          <TableColumn prefWidth="90.4000244140625" text="CNP" />
+            <TableColumn prefWidth="99.20001220703125" text="Department" />
+            <TableColumn prefWidth="42.39996337890625" text="Year" />
+            <TableColumn prefWidth="53.60002441406249" text="Group" />
+        </columns>
+      </TableView>
+      <Button fx:id="adddonationbutton" layoutX="414.0" layoutY="530.0" mnemonicParsing="false" text="Add donation">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="addmedicalinfo" layoutX="552.0" layoutY="530.0" mnemonicParsing="false" text="Add medical information ">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Button>
+      <TableView layoutX="451.0" layoutY="72.0" prefHeight="296.0" prefWidth="407.0">
+         <columns>
+            <TableColumn prefWidth="165.5999755859375" text="First Name" />
+            <TableColumn prefWidth="172.0" text="Last Name" />
+            <TableColumn minWidth="0.0" prefWidth="69.5999755859375" text="CNP" />
+         </columns>
+      </TableView>
+      <Label layoutX="297.0" layoutY="389.0" text="Search for a specific user by CNP :">
+         <font>
+            <Font name="Gill Sans MT" size="24.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <TextField fx:id="cnpfield" layoutX="334.0" layoutY="441.0" prefHeight="26.0" prefWidth="192.0" />
+      <Label layoutX="278.0" layoutY="445.0" text="CNP :">
+         <font>
+            <Font name="Gill Sans MT" size="15.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Button fx:id="searchbutton" layoutX="570.0" layoutY="438.0" mnemonicParsing="false" text="Search user">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="revertbutton" layoutX="715.0" layoutY="438.0" mnemonicParsing="false" text="Revert filter">
+         <font>
+            <Font name="Century Gothic" size="16.0" />
+         </font>
+      </Button>
+      <TextField fx:id="punctefield" layoutX="318.0" layoutY="536.0" prefHeight="27.0" prefWidth="78.0" />
+      <ComboBox fx:id="tipcombo" layoutX="89.0" layoutY="536.0" prefWidth="150.0" />
+      <Label layoutX="257.0" layoutY="539.0" text="Puncte :">
+         <font>
+            <Font name="Gill Sans MT" size="15.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="45.0" layoutY="541.0" text="Tip :">
+         <font>
+            <Font name="Gill Sans MT" size="15.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+   </children>
+</AnchorPane>
