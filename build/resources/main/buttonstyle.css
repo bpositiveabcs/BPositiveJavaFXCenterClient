@@ -1,0 +1,148 @@
+.button-box {
+    -fx-background-color: #a10237; /* Pink color */
+    -fx-text-fill: #F0E7E7; /* White text color */
+    -fx-font-family: "Gill Sans MT";
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px; /* Adjust padding as needed */
+    -fx-background-radius: 4px; /* Rounded corners */
+    -fx-border-radius: 4px; /* Rounded corners */
+    -fx-border-color: #a10237; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-cursor: hand; /* Hand cursor on hover */
+}
+
+.button{
+    -fx-background-color: #a10237; /* Pink color */
+    -fx-text-fill: #F0E7E7; /* White text color */
+    -fx-font-family: "Gill Sans MT";
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px; /* Adjust padding as needed */
+    -fx-background-radius: 4px; /* Rounded corners */
+    -fx-border-radius: 4px; /* Rounded corners */
+    -fx-border-color: #a10237; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-cursor: hand; /* Hand cursor on hover */
+}
+.container {
+    -fx-background-color: #ffebed;
+}
+
+.list-view {
+    -fx-background-color: #f4ffeb; /* Background color */
+    -fx-border-color: #f2ffe6;
+    -fx-font-family: "Gill Sans MT";
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Text color */
+}
+
+.list-cell {
+    -fx-background-color: transparent; /* Transparent background for list cells */
+}
+
+.list-cell:selected {
+    -fx-background-color: derive(-fx-control-inner-background, -20%); /* Slightly darker color when selected */
+}
+
+
+.table-view {
+    -fx-background-color: #ffffff; /* Background color */
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #e0f7fa; /* Header background color */
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: #611515; /* Header text color */
+    -fx-font-size: 14px; /* Header font size */
+    -fx-font-weight: bold; /* Header font weight */
+    -fx-font-family: "Gill Sans MT"; /* Header font family */
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #611515; /* Cell text color */
+    -fx-font-size: 14px; /* Cell font size */
+    -fx-font-family: "Gill Sans MT"; /* Cell font family */
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f4ffeb; /* Alternate row color */
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #a10237; /* Selected row color */
+    -fx-text-fill: #ffffff; /* Selected text color */
+}
+
+
+.text-field {
+    -fx-background-color: #F6E9DA; /* Background color */
+    -fx-text-fill: #37474f; /* Text color */
+    -fx-font-family: "Gill Sans MT"; /* Font family */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: bold; /* Font weight */
+    -fx-border-color: #611515; /* Border color */
+    -fx-border-width: 1px; /* Border width */
+    -fx-border-radius: 4px; /* Border radius */
+}
+
+.date-picker {
+    -fx-background-color: #F6E9DA; /* Background color */
+    -fx-text-fill: #37474f; /* Text color */
+    -fx-font-family: "Gill Sans MT"; /* Font family */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: bold; /* Font weight */
+    -fx-border-color: #611515; /* Border color */
+    -fx-border-width: 1px; /* Border width */
+    -fx-border-radius: 4px; /* Border radius */
+}
+
+.date-picker .date-picker-display-node,
+.date-picker .date-picker-popup {
+    -fx-background-color: transparent; /* Setare culoare de fundal transparentă */
+    -fx-border-color: transparent; /* Setare culoare chenar transparentă */
+}
+
+.text-area {
+    -fx-background-color: #F6E9DA; /* Background color */
+    -fx-text-fill: #37474f; /* Text color */
+    -fx-font-family: "Gill Sans MT"; /* Font family */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: bold; /* Font weight */
+    -fx-control-inner-background: #F6E9DA; /* Background color */
+    -fx-border-color: #611515; /* Border color */
+    -fx-border-width: 1px; /* Border width */
+    -fx-border-radius: 4px; /* Border radius */
+}
+
+.combo-box {
+    -fx-background-color: #F6E9DA; /* Background color */
+    -fx-text-fill: #37474f; /* Text color */
+    -fx-font-family: "Gill Sans MT"; /* Font family */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: bold; /* Font weight */
+    -fx-border-color: #611515; /* Border color */
+    -fx-border-width: 1px; /* Border width */
+    -fx-border-radius: 4px; /* Border radius */
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #ffffff; /* Background color for list items */
+    -fx-text-fill: #37474f; /* Text color for list items */
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: #a10237; /* Background color for selected item */
+    -fx-text-fill: #ffffff; /* Text color for selected item */
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #a10237; /* Background color for arrow button */
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: #ffffff; /* Arrow color */
+}
+
