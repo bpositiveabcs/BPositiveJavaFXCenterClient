@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="backgroundPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffebed;" styleClass="container" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bpos.client.controller.LogInController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffebed;" stylesheets="@buttonstyle.css">
+         <children>
+            <ImageView fx:id="topImageView" fitHeight="118.0" fitWidth="600.0" pickOnBounds="true">
+               <image>
+                  <Image url="@banner v2.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rectangleImageView" fitHeight="211.0" fitWidth="221.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img_4.png" />
+               </image></ImageView>
+          <Button fx:id="loginButton" layoutX="376.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="41.0" prefWidth="114.0" styleClass="button-box" text="LOG IN">
+               <font>
+                  <Font name="Gill Sans MT" size="22.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Button>
+            <Label fx:id="usernameLabel" layoutX="129.0" layoutY="172.0" prefHeight="22.0" prefWidth="187.0" text="           USERNAME :">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.6477273016264944" endY="0.12121209231289942" startX="0.26515151515151514">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <TextField fx:id="usernameTextField" layoutX="324.0" layoutY="169.0" minWidth="-Infinity" prefHeight="26.0" prefWidth="167.0" styleClass="list-view" />
+            <Label fx:id="passwordLabel" alignment="CENTER" layoutX="133.0" layoutY="221.0" prefHeight="26.0" prefWidth="174.0" text="         PASSWORD : ">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="0.378787861628966" startY="0.8863635677279849">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.6313725709915161" green="0.003921568859368563" blue="0.2078431397676468" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <PasswordField fx:id="passwordTextField" layoutX="324.0" layoutY="220.0" prefHeight="26.0" prefWidth="167.0" styleClass="list-view" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

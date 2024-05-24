@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bpos.centerclient.controllers.CenterMainController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@centre screen.png" />
+         </image></ImageView>
+      <TableView layoutX="41.0" layoutY="84.0" prefHeight="486.0" prefWidth="529.0">
+        <columns>
+          <TableColumn prefWidth="181.3999900817871" text="Event" />
+          <TableColumn prefWidth="145.00001525878906" text="Date" />
+            <TableColumn prefWidth="204.0" text="Description" />
+        </columns>
+      </TableView>
+      <Label layoutX="41.0" layoutY="46.0" text="Welcome to BPositive,                        !">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="613.0" layoutY="195.0" text="Create an event!">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <Label layoutX="622.0" layoutY="299.0" text="Manage Users!">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Button fx:id="logout" layoutX="683.0" layoutY="539.0" mnemonicParsing="false" onAction="#handlelogout" text="Log Out">
+         <font>
+            <Font name="Century Gothic Bold" size="18.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Button>
+      <Button fx:id="addevent" layoutX="635.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleaddevent" text="Add event">
+         <font>
+            <Font name="Century Gothic Bold" size="16.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Button>
+      <Button fx:id="adddonation" layoutX="624.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleadddonation" text="Add donation">
+         <font>
+            <Font name="Century Gothic Bold" size="16.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Button>
+   </children>
+</AnchorPane>

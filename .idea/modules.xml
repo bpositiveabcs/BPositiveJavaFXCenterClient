@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BPositiveCenterClient.iml" filepath="$PROJECT_DIR$/BPositiveCenterClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BPositiveCommon/BPositiveModel/BPositiveCenterClient.BPositiveCommon.BPositiveModel.main.iml" filepath="$PROJECT_DIR$/.idea/modules/BPositiveCommon/BPositiveModel/BPositiveCenterClient.BPositiveCommon.BPositiveModel.main.iml" />
     </modules>
   </component>
 </project>
