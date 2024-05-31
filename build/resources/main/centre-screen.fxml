@@ -19,7 +19,7 @@
             <TableColumn prefWidth="204.0" text="Description" />
         </columns>
       </TableView>
-      <Label layoutX="41.0" layoutY="46.0" text="Welcome to BPositive,                        !">
+      <Label layoutX="41.0" layoutY="46.0" text="Welcome to BPositive!">
          <font>
             <Font name="Century Gothic Bold" size="18.0" />
          </font>
@@ -102,7 +102,7 @@
             </LinearGradient>
          </textFill>
       </Button>
-      <Button fx:id="addevent" layoutX="635.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleaddevent" text="Add event">
+      <Button fx:id="addevent" layoutX="635.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleAddEvent" text="Add event">
          <font>
             <Font name="Century Gothic Bold" size="16.0" />
          </font>
@@ -123,7 +123,7 @@
             </LinearGradient>
          </textFill>
       </Button>
-      <Button fx:id="adddonation" layoutX="624.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleadddonation" text="Add donation">
+      <Button fx:id="adddonation" layoutX="624.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleAddDonation" text="Add donation">
          <font>
             <Font name="Century Gothic Bold" size="16.0" />
          </font>

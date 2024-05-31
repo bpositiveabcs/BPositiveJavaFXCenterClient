@@ -55,7 +55,7 @@ public class WebSocketManager {
                 public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
                     System.out.println("Connected to WebSocket at: " + url);
                     connected = true;
-                    subscribeToTopic(session, "/topic/clients");
+                    subscribeToTopic(session, "/topic/centers");
                 }
 
                 @Override

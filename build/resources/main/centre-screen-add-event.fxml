@@ -33,7 +33,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Label layoutX="82.0" layoutY="115.0" prefHeight="20.0" prefWidth="62.0" text="Name :">
+      <Label layoutX="82.0" layoutY="152.0" prefHeight="20.0" prefWidth="62.0" text="Name :">
          <font>
             <Font name="Century Gothic Bold" size="16.0" />
          </font>
@@ -59,8 +59,8 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <TextField fx:id="nametextfield" layoutX="190.0" layoutY="112.0" prefHeight="26.0" prefWidth="228.0" />
-      <Label layoutX="82.0" layoutY="155.0" text="Announcement date :">
+      <TextField fx:id="nametextfield" layoutX="190.0" layoutY="149.0" prefHeight="26.0" prefWidth="228.0" />
+      <Label layoutX="82.0" layoutY="192.0" text="Announcement date :">
          <font>
             <Font name="Century Gothic Bold" size="16.0" />
          </font>
@@ -75,27 +75,6 @@
                   <Stop offset="1.0">
                      <color>
                         <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" opacity="0.7799999713897705" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </textFill>
-      </Label>
-      <Label layoutX="82.0" layoutY="195.0" text="Beginnning date :">
-         <font>
-            <Font name="Century Gothic Bold" size="16.0" />
-         </font>
-         <textFill>
-            <LinearGradient endX="0.6931818037322073" endY="0.6287878647898182" startY="0.9242424097928135">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.6299999952316284" green="0.006300000008195639" blue="0.2142000049352646" opacity="0.781154990196228" />
                      </color>
                   </Stop>
                </stops>
@@ -145,8 +124,7 @@
          </textFill>
       </Label>
       <TextField fx:id="nrparticipants" layoutX="290.0" layoutY="266.0" prefHeight="26.0" prefWidth="128.0" />
-      <DatePicker fx:id="adtae" layoutX="270.0" layoutY="153.0" prefHeight="26.0" prefWidth="146.0" />
-      <DatePicker fx:id="bdate" layoutX="269.0" layoutY="192.0" prefHeight="26.0" prefWidth="146.0" />
+      <DatePicker fx:id="adtae" layoutX="270.0" layoutY="190.0" prefHeight="26.0" prefWidth="146.0" />
       <DatePicker fx:id="edate" layoutX="270.0" layoutY="229.0" prefHeight="26.0" prefWidth="146.0" />
       <Label layoutX="102.0" layoutY="306.0" prefHeight="20.0" prefWidth="122.0" text="Requirements :">
          <font>

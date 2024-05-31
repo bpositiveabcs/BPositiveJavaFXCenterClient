@@ -52,11 +52,11 @@ public class StartClient extends Application {
         }
 
         LogInController controller = loader.getController();
-        controller.setProperties(server);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login");
+        controller.setProperties(primaryStage,server);
         primaryStage.show();
     }
 

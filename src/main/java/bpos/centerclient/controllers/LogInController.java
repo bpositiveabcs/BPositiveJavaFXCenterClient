@@ -3,8 +3,6 @@ package bpos.centerclient.controllers;
 import bpos.centerclient.RestComunication.services.ClientService;
 
 import bpos.common.model.Center;
-import bpos.common.model.LogInfo;
-import bpos.common.model.Person;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.*;
@@ -12,7 +10,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,10 +26,10 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import kong.unirest.Unirest;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -69,7 +66,7 @@ public class LogInController {
 
     public void initialize() {
         System.out.println("LogInController initialized");
-        setWindowSize();
+        //setWindowSize();
         playBackgroundAnimation();
 
         Image image = new Image(getClass().getResource("/img_4.png").toExternalForm());
@@ -78,7 +75,7 @@ public class LogInController {
         Image topImage = new Image(getClass().getResource("/banner v2.png").toExternalForm());
         topImageView.setImage(topImage);
 
-        // Aplicați animația de pulsare pe ImageView-uri
+
         pulsatingAnimation(rectangleImageView);
         pulsatingAnimationComingAtYou(topImageView);
 
@@ -88,51 +85,15 @@ public class LogInController {
         pulsatingAnimationgeneral(usernameLabel,3);
         pulsatingAnimationgeneral(passwordLabel,3);
 
-        //addMovingCircles();
 
     }
 
-    public void setProperties(ClientService server) {
+    public void setProperties(Stage primaryStage, ClientService server) {
+        this.stage = primaryStage;
         this.clientService = server;
     }
 
 
-    private void addMovingCircles() {
-        // Load circle images
-        Image circle1 = new Image(getClass().getResource("/img_3.png").toExternalForm());
-        Image circle2 = new Image(getClass().getResource("/img_3.png").toExternalForm());
-
-        // Create ImageViews
-        ImageView circleView1 = new ImageView(circle1);
-        ImageView circleView2 = new ImageView(circle2);
-
-        // Set initial positions
-        StackPane.setMargin(circleView1, new Insets(50));
-        StackPane.setMargin(circleView2, new Insets(100, 0, 0, 100));
-
-        // Create StackPane to hold circles
-        StackPane circlesPane = new StackPane();
-        circlesPane.getChildren().addAll(circleView1, circleView2);
-
-        // Add to background pane
-        backgroundPane.getChildren().add(circlesPane);
-
-        // Animate circles
-        animateCircle(circleView1, 20, 20, 2000); // Limit the movement within window boundaries
-        animateCircle(circleView2, -20, -20, 2500); // Limit the movement within window boundaries
-    }
-
-
-
-
-    private void animateCircle(ImageView circle, double toX, double toY, double durationMillis) {
-        TranslateTransition transition = new TranslateTransition(Duration.millis(durationMillis), circle);
-        transition.setByX(toX);
-        transition.setByY(toY);
-        transition.setCycleCount(TranslateTransition.INDEFINITE);
-        transition.setAutoReverse(true);
-        transition.play();
-    }
 
     public static void pulsatingAnimation(ImageView imageView) {
         // Definirea animației de scalare
@@ -294,7 +255,7 @@ public void handleLogin(ActionEvent event) throws URISyntaxException, JsonProces
     } catch (JsonProcessingException e) {
         throw new RuntimeException(e);
     }
-//
+
     Center person = clientService.login(username, password);
     if (person != null) {
         System.out.println("Login successful");
@@ -309,27 +270,49 @@ public void handleLogin(ActionEvent event) throws URISyntaxException, JsonProces
         usernameTextField.clear();
     }
 }
-private void handleLoginSuccess(String username, String password, Center person) throws IOException {
+//private void handleLoginSuccess(String username, String password, Center person) throws IOException {
+//
+//    FXMLLoader loader = new FXMLLoader(getClass().getResource("/centre-screen.fxml"));
+//    Parent userViewParent = loader.load();
+//    CenterMainController userController = loader.getController();
+//
+//
+//    }
 
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/centre-screen.fxml"));
-    Parent userViewParent = loader.load();
-    CenterMainController userController = loader.getController();
-    if (!Objects.equals(person.getLogInfo().getPassword(), password)) {
-        System.out.println("Password is not correct");
+    public void handleLoginSuccess(String username, String password, Center person) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        URL url=getClass().getResource("/centre-screen.fxml");
+        loader.setLocation(url);
+        Parent userViewParent = loader.load();
+        CenterMainController userController = loader.getController();
+        if (!Objects.equals(person.getLogInfo().getPassword(), password)) {
+            System.out.println("Password is not correct");
+            passwordTextField.clear();
+            return;
+        }
+        userController.setServer(clientService);
+        //userController.setLoggedUser(Optional.of(person));
+        userController.setCenter(stage, Optional.of(person));
+
+//        Stage stage = (Stage) usernameTextField.getScene().getWindow();
+//        userController.setStage(stage);
+//
+//        Scene userViewScene = new Scene(userViewParent);
+//        stage.setScene(userViewScene);
+//        stage.show();
+
+
+        Scene userViewScene = new Scene(userViewParent);
+        Stage stage = (Stage) usernameTextField.getScene().getWindow();
+        stage.setScene(userViewScene);
+        stage.show();
+
+
         passwordTextField.clear();
-        return;
+        usernameTextField.clear();
+
     }
-//    userController.setServer(clientService);
-//    userController.setLoggedUser(person);
-//
-//    Scene userViewScene = new Scene(userViewParent);
-//    Stage stage = (Stage) usernameTextField.getScene().getWindow();
-//    stage.setScene(userViewScene);
-//    stage.show();
-//
-//    System.out.println("Login failed");
-//    passwordTextField.clear();
-//    usernameTextField.clear();
 
 }
 
@@ -362,7 +345,7 @@ private void handleLoginSuccess(String username, String password, Center person)
 //    }
 
 
-    public void setLogIn(Stage primaryStage) {
-        this.stage = primaryStage;
-    }
-}
+//    public void setLogIn(Stage primaryStage) {
+//        this.stage = primaryStage;
+//    }
+
