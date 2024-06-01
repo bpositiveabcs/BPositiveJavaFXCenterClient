@@ -62,6 +62,7 @@ public class LogInController {
     private String URI_REST = "http://localhost:55555/api/common/login";
     private Stage stage;
     private ClientService clientService;
+    private Center centerLogged;
 
 
     public void initialize() {
@@ -257,6 +258,7 @@ public void handleLogin(ActionEvent event) throws URISyntaxException, JsonProces
     }
 
     Center person = clientService.login(username, password);
+    this.centerLogged=person;
     if (person != null) {
         System.out.println("Login successful");
         try {
@@ -292,17 +294,7 @@ public void handleLogin(ActionEvent event) throws URISyntaxException, JsonProces
             return;
         }
         userController.setServer(clientService);
-        //userController.setLoggedUser(Optional.of(person));
         userController.setCenter(stage, Optional.of(person));
-
-//        Stage stage = (Stage) usernameTextField.getScene().getWindow();
-//        userController.setStage(stage);
-//
-//        Scene userViewScene = new Scene(userViewParent);
-//        stage.setScene(userViewScene);
-//        stage.show();
-
-
         Scene userViewScene = new Scene(userViewParent);
         Stage stage = (Stage) usernameTextField.getScene().getWindow();
         stage.setScene(userViewScene);
@@ -316,36 +308,5 @@ public void handleLogin(ActionEvent event) throws URISyntaxException, JsonProces
 
 }
 
-//    @FXML
-//    void handleLogIn(ActionEvent event) {
-//        String username = usernameTextField.getText();
-//        String password = passwordTextField.getText();
-//
-//        Unirest.post(URI_REST)
-//                .header("Content-Type", "application/json")
-//                .body(new LogInRequest(username, password))
-//                .asStringAsync(response -> {
-//                    Platform.runLater(() -> {
-//                        if (response.getStatus() == 200) {
-//                            ObjectMapper mapper = new ObjectMapper();
-//                            try {
-//                                this.credentials = mapper.readValue(response.getBody(), LogInfo.class);
-//                            } catch (JsonProcessingException e) {
-//                                MessageAlert.showMessage(null, Alert.AlertType.ERROR, "Error", "Cannot parse credentials");
-//                            }
-//                            System.out.println("Logged in");
-//                            openCenterView();
-//                        } else {
-//                            MessageAlert.showMessage(null, Alert.AlertType.ERROR, "Error", "Invalid username or password");
-//                            System.out.println(response.getStatus());
-//                        }
-//                    });
-//                });
-//
-//    }
 
-
-//    public void setLogIn(Stage primaryStage) {
-//        this.stage = primaryStage;
-//    }
 

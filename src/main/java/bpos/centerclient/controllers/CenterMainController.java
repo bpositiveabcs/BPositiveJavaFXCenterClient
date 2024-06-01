@@ -10,10 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -57,16 +54,6 @@ public class CenterMainController implements WebSocketMessageListener {
     @FXML
     public void initialize() {
     }
-
-
-
-
-
-
-
-
-
-
     @FXML
     public void handlelogout(ActionEvent event) {
         stage.close();
@@ -74,25 +61,6 @@ public class CenterMainController implements WebSocketMessageListener {
         stage.close();
 
     }
-
-
-//    @FXML
-//    void handleAddEvent(ActionEvent event) {
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        fxmlLoader.setLocation(getClass().getResource("/centre-screen-add-event.fxml"));
-//        Parent root= null;
-//        try {
-//            root = fxmlLoader.load();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        CenterAddEventController controller = fxmlLoader.<CenterAddEventController>getController();
-//        controller.setCenterEvent(stage,clientService);
-//        stage.setTitle("Add Event");
-//        stage.setScene(new Scene(root ));
-//        stage.show();
-//
-//    }
 
     @FXML
     void handleAddEvent(ActionEvent event) {
@@ -109,7 +77,7 @@ public class CenterMainController implements WebSocketMessageListener {
             e.printStackTrace();
         }
         CenterAddEventController controller = fxmlLoader.getController();
-        controller.setCenterEvent(stage, clientService);
+        controller.setCenterEvent(stage, clientService, loggedUser.get());
         stage.setTitle("Add Event");
         stage.setScene(new Scene(root));
         stage.show();
@@ -133,15 +101,20 @@ public class CenterMainController implements WebSocketMessageListener {
         stage.show();
 
     }
-
-
-
     @FXML
     private AnchorPane cartBtn;
 
     @Override
     public void onMessageReceived(String message) {
-
+        showAlert(message);
+    }
+    public  void showAlert( String message) {
+        javafx.application.Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 
 

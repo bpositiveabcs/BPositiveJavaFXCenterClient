@@ -2,6 +2,7 @@ package bpos.centerclient.RestComunication.services;
 
 import bpos.centerclient.CenterResponse;
 import bpos.common.model.Center;
+import bpos.common.model.Event;
 import bpos.common.model.Person;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class ClientService {
 
     private static final String BASE_URL = "http://localhost:55555/centers";
-    private final HttpClient httpClient;
+    private static final String BASE_URL2 = "http://localhost:55555";    private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
     public ClientService() {
@@ -37,6 +38,52 @@ public class ClientService {
                 .build();
 
     }
+   public Event addEvent(Event addEvent){
+       System.out.println(addEvent);
+       String eventJson = null;
+       try {
+           ObjectMapper objectMapper = new ObjectMapper();
+           objectMapper.registerModule(new JavaTimeModule());
+           objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+           eventJson = objectMapper.writeValueAsString(addEvent);
+       } catch (JsonProcessingException ex) {
+           throw new RuntimeException(ex);
+       }
+
+       HttpRequest request = HttpRequest.newBuilder()
+               .uri(URI.create(BASE_URL2 + "/events"))
+               .method("POST", HttpRequest.BodyPublishers.ofString(eventJson))
+               .header("Content-Type", "application/json")
+               .build();
+       System.out.println(request);
+
+       HttpResponse<String> response = null;
+       try {
+           response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+           String responseBody = response.body();
+           System.out.println(responseBody);
+
+           if (response.statusCode() == 200) {
+               try {
+                   ObjectMapper objectMapper = new ObjectMapper();
+                   objectMapper.registerModule(new JavaTimeModule());
+                   objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                   Event eventNou= objectMapper.readValue(responseBody, Event.class);
+                   return eventNou;
+               } catch (JsonProcessingException ex) {
+                   throw new RuntimeException(ex);
+               }
+           } else {
+               System.err.println("Failed to update event: " + response.body());
+               return null;
+           }
+       } catch (IOException | InterruptedException ex) {
+           throw new RuntimeException(ex);
+       }
+
+
+   }
     public Center login(String username, String password) {
         String params = URLEncoder.encode("username", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(username, StandardCharsets.UTF_8) +
                 "&" +
