@@ -170,6 +170,6 @@
       </Label>
       <TextArea fx:id="requirementsfield" layoutX="230.0" layoutY="306.0" prefHeight="101.0" prefWidth="187.0" />
       <TextArea fx:id="descriptionfield" layoutX="230.0" layoutY="435.0" prefHeight="115.0" prefWidth="187.0" />
-      <Button fx:id="addeventbutton" layoutX="24.0" layoutY="23.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="addeventbutton" layoutX="24.0" layoutY="23.0" mnemonicParsing="false" text="Add" onAction="#handleAddEvent"/>
    </children>
 </AnchorPane>

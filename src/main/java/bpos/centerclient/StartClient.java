@@ -3,8 +3,10 @@ package bpos.centerclient;
 
 import bpos.centerclient.RestComunication.services.ClientService;
 import bpos.centerclient.RestComunication.utils.ClientWebSocket;
+import bpos.centerclient.RestComunication.utils.WebSocketManager;
 import bpos.centerclient.controllers.LogInController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,6 +25,7 @@ public class StartClient extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        WebSocketManager.getInstance().connect();
         Properties properties = new Properties();
         try (InputStream input = getClass().getResourceAsStream("/application.properties")) {
             if (input == null) {
@@ -57,6 +60,7 @@ public class StartClient extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login");
         controller.setProperties(primaryStage,server);
+        WebSocketManager.getInstance().addListener(message -> Platform.runLater(() -> System.out.println(message)));
         primaryStage.show();
     }
 
