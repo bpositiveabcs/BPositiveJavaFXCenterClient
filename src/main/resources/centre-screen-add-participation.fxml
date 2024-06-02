@@ -21,7 +21,7 @@
             <TableColumn fx:id="groupColumn" prefWidth="53.60002441406249" text="Group" />
         </columns>
       </TableView>
-      <Button fx:id="adddonationbutton" layoutX="414.0" layoutY="530.0" mnemonicParsing="false" text="Add donation">
+      <Button fx:id="adddonationbutton" layoutX="414.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleaddDonation" text="Add donation">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
@@ -59,7 +59,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <TextField fx:id="cnpfield" layoutX="334.0" layoutY="441.0" prefHeight="26.0" prefWidth="192.0" />
+      <TextField fx:id="cnptextfield" layoutX="334.0" layoutY="441.0" prefHeight="26.0" prefWidth="192.0" />
       <Label layoutX="278.0" layoutY="445.0" text="CNP :">
          <font>
             <Font name="Gill Sans MT" size="15.0" />
@@ -81,17 +81,17 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="searchbutton" layoutX="570.0" layoutY="438.0" mnemonicParsing="false" text="Search user">
+      <Button fx:id="searchbutton" layoutX="570.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleSearchByCnp" text="Search user">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="revertbutton" layoutX="715.0" layoutY="438.0" mnemonicParsing="false" text="Revert filter">
+      <Button fx:id="revertbutton" layoutX="715.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleRevertSearch" text="Revert filter">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="punctefield" layoutX="318.0" layoutY="536.0" prefHeight="27.0" prefWidth="78.0" />
+      <TextField fx:id="pointstextfield" layoutX="318.0" layoutY="536.0" prefHeight="27.0" prefWidth="78.0" />
       <ComboBox fx:id="tipcombo" layoutX="89.0" layoutY="536.0" prefWidth="150.0" />
       <Label layoutX="257.0" layoutY="539.0" text="Puncte :">
          <font>
@@ -135,5 +135,6 @@
             </LinearGradient>
          </textFill>
       </Label>
+      <Button fx:id="returnbutton1" layoutX="27.0" layoutY="23.0" mnemonicParsing="false" onAction="#handlereturn1" text="Return" />
    </children>
 </AnchorPane>

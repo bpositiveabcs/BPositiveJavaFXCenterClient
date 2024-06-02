@@ -61,6 +61,8 @@ public class CenterMainController implements WebSocketMessageListener {
         this.clientService = server;
     }
 
+
+
     @FXML
     public void initialize() {
         System.out.println("Main Controller initialized");

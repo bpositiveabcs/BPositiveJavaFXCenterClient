@@ -3,16 +3,17 @@ package bpos.centerclient.controllers;
 import bpos.centerclient.RestComunication.services.ClientService;
 import bpos.centerclient.RestComunication.utils.WebSocketManager;
 import bpos.common.model.*;
+import com.sun.javafx.UnmodifiableArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -31,6 +32,19 @@ public class CenterAddParticipationController {
     private Center centerLogged;
     @FXML
     private Button addmedicalinfo;
+
+    @FXML
+    private Button returnbutton1;
+
+    @FXML
+    private TextField cnptextfield;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Button revertButton;
+
 
     @FXML
     private TableView<Student> studentsTable;
@@ -58,15 +72,13 @@ public class CenterAddParticipationController {
 
     private ObservableList<Person> personList = FXCollections.observableArrayList();
 
+    @FXML
+    private TextField pointstextfield;
 
     @FXML
-    private ListView<Event> listEvents;
+    private ComboBox<String> tipcombo;
 
-    @FXML
-    private ListView<Center> listCenters;
-
-    @FXML
-    private ListView<LogInfo> listUsers;
+    private Optional<Center> loggedUser;
 
     public void setCenterParticipation(Stage stage, ClientService clientService, Center centerLogged) {
         this.clientService = clientService;
@@ -78,6 +90,8 @@ public class CenterAddParticipationController {
     }
 
     public void initialize() {
+
+        tipcombo.getItems().addAll("Transfuzie", "Trombocite", "Plasma");
         // Initialize TableView columns
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPersonalDate().getFirstName()));
         cnpColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPersonalDate().getCnp()));
@@ -91,7 +105,6 @@ public class CenterAddParticipationController {
 
         studentsTable.setItems(studentList);
         personsTable.setItems(personList);
-
 
 
     }
@@ -117,11 +130,71 @@ public class CenterAddParticipationController {
         }
     }
 
+//    @FXML
+//    private void handleUploadDocument(ActionEvent event) {
+//        Object selectedObject = null;
+//
+//        selectedObject = studentsTable.getSelectionModel().getSelectedItem();
+//
+//        if (selectedObject == null) {
+//            selectedObject = personsTable.getSelectionModel().getSelectedItem();
+//        }
+//        if (selectedObject != null) {
+//            String username = null;
+//
+//            if (selectedObject instanceof Student) {
+//                // Dacă obiectul selectat este un student
+//                Student selectedUser = (Student) selectedObject;
+//                username = selectedUser.getPersonLogInfo().getUsername();
+//            } else if (selectedObject instanceof Person) {
+//                // Dacă obiectul selectat este o persoană
+//                Person selectedPerson = (Person) selectedObject;
+//                // Presupunând că PersonalData are o metodă getUsername()
+//                username = selectedPerson.getPersonLogInfo().getUsername();
+//            }
+//
+//            if (username != null) {
+//                FileChooser fileChooser = new FileChooser();
+//                fileChooser.setTitle("Select Document to Upload");
+//                fileChooser.getExtensionFilters().addAll(
+//                        new FileChooser.ExtensionFilter("All Files", "*.*"),
+//                        new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+//                        new FileChooser.ExtensionFilter("Text Files", "*.txt")
+//                );
+//
+//                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Obține fereastra curentă
+//                File selectedFile = fileChooser.showOpenDialog(stage);
+//
+//                if (selectedFile != null) {
+//                    try {
+//                        // Creează directorul principal dacă nu există
+//                        File mainDir = new File("user_medicalinfo");
+//                        if (!mainDir.exists()) {
+//                            mainDir.mkdir();
+//                        }
+//
+//                        // Creează directorul specific utilizatorului dacă nu există
+//                        File userDir = new File(mainDir, username);
+//                        if (!userDir.exists()) {
+//                            userDir.mkdir();
+//                        }
+//
+//                        // Copiază fișierul în directorul specific utilizatorului
+//                        Files.copy(selectedFile.toPath(), Paths.get(userDir.getPath(), selectedFile.getName()));
+//                        System.out.println("File uploaded successfully!");
+//                    } catch (IOException e) {
+//                        System.out.println("Failed to upload file: " + e.getMessage());
+//                    }
+//                }
+//            } else {
+//                System.out.println("No user selected.");
+//            }
+//        }
+//    }
+
     @FXML
     private void handleUploadDocument(ActionEvent event) {
-        Object selectedObject = null;
-
-        selectedObject = studentsTable.getSelectionModel().getSelectedItem();
+        Object selectedObject = studentsTable.getSelectionModel().getSelectedItem();
 
         if (selectedObject == null) {
             selectedObject = personsTable.getSelectionModel().getSelectedItem();
@@ -130,13 +203,10 @@ public class CenterAddParticipationController {
             String username = null;
 
             if (selectedObject instanceof Student) {
-                // Dacă obiectul selectat este un student
                 Student selectedUser = (Student) selectedObject;
                 username = selectedUser.getPersonLogInfo().getUsername();
             } else if (selectedObject instanceof Person) {
-                // Dacă obiectul selectat este o persoană
                 Person selectedPerson = (Person) selectedObject;
-                // Presupunând că PersonalData are o metodă getUsername()
                 username = selectedPerson.getPersonLogInfo().getUsername();
             }
 
@@ -144,30 +214,34 @@ public class CenterAddParticipationController {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Select Document to Upload");
                 fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("All Files", "*.*"),
+                        new FileChooser.ExtensionFilter("All Files", "."),
                         new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
                         new FileChooser.ExtensionFilter("Text Files", "*.txt")
                 );
 
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Obține fereastra curentă
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 File selectedFile = fileChooser.showOpenDialog(stage);
 
                 if (selectedFile != null) {
                     try {
-                        // Creează directorul principal dacă nu există
+                        // Create the main directory if it doesn't exist
                         File mainDir = new File("user_medicalinfo");
                         if (!mainDir.exists()) {
                             mainDir.mkdir();
                         }
 
-                        // Creează directorul specific utilizatorului dacă nu există
+                        // Create the user-specific directory if it doesn't exist
                         File userDir = new File(mainDir, username);
                         if (!userDir.exists()) {
                             userDir.mkdir();
                         }
 
-                        // Copiază fișierul în directorul specific utilizatorului
+                        // Copy the file in JavaFX
                         Files.copy(selectedFile.toPath(), Paths.get(userDir.getPath(), selectedFile.getName()));
+
+                        // Send the file to the server
+                        clientService.uploadFileToServer(selectedFile, username);
+
                         System.out.println("File uploaded successfully!");
                     } catch (IOException e) {
                         System.out.println("Failed to upload file: " + e.getMessage());
@@ -178,6 +252,108 @@ public class CenterAddParticipationController {
             }
         }
     }
+
+    @FXML
+    private void handleSearchByCnp() {
+        String cnp = cnptextfield.getText();
+        if (cnp != null && !cnp.isEmpty()) {
+            List<Person> foundPersons = clientService.findByCnpPerson(cnp);
+            List<Student> foundStudents = clientService.findByCnpStudent(cnp);
+
+            if (foundPersons != null && !foundPersons.isEmpty()) {
+                personList.setAll(foundPersons);
+                personsTable.setItems(personList);
+                studentsTable.setItems(FXCollections.observableArrayList()); // Clear the student table
+            } else if (foundStudents != null && !foundStudents.isEmpty()) {
+                studentList.setAll(foundStudents);
+                studentsTable.setItems(studentList);
+                personsTable.setItems(FXCollections.observableArrayList()); // Clear the person table
+            } else {
+                System.out.println("No persons or students found with the given CNP.");
+                personsTable.setItems(FXCollections.observableArrayList()); // Clear the person table
+                studentsTable.setItems(FXCollections.observableArrayList()); // Clear the student table
+            }
+        } else {
+            System.out.println("Please enter a CNP to search.");
+        }
+    }
+
+    @FXML
+    private void handleRevertSearch() {
+        loadPersons();
+        loadStudents();
+        cnptextfield.clear();
+    }
+
+    @FXML
+    private void handleaddDonation() {
+        String selectedType = tipcombo.getValue();
+        String pointsText = pointstextfield.getText();
+        if (selectedType != null && pointsText != null && !pointsText.isEmpty()) {
+            try {
+                int points = Integer.parseInt(pointsText);
+
+                DonationType donationType = new DonationType();
+                switch (selectedType) {
+                    case "Transfuzie":
+                        donationType.setId(1);  // Set appropriate ID
+                        donationType.setName("Transfuzie");
+                        break;
+                    case "Trombocite":
+                        donationType.setId(2);  // Set appropriate ID
+                        donationType.setName("Trombocite");
+                        break;
+                    case "Plasma":
+                        donationType.setId(3);  // Set appropriate ID
+                        donationType.setName("Plasma");
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid donation type selected");
+                }
+
+                Donation donation = new Donation();
+                donation.setDonationType(donationType);
+                donation.setPoints(points);
+
+                Donation savedDonation = clientService.addDonation(donation);
+                if (savedDonation != null) {
+                    System.out.println("Donation added successfully");
+                } else {
+                    System.out.println("Failed to add donation");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Points must be a valid number");
+            }
+        } else {
+            System.out.println("Please select a donation type and enter points");
+        }
+    }
+
+    @FXML
+    private void handlereturn1(ActionEvent event) {
+        // Închide fereastra curentă
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
+        // Deschide fereastra anterioară (CenterMainController)
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/centre-main.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        CenterMainController controller = fxmlLoader.getController();
+
+        controller.setCenter(stage, loggedUser.get()); // Setează utilizatorul și alte informații necesare
+        stage.setTitle("Main Screen");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+
+
+}
 
 
 //    @FXML
@@ -222,4 +398,4 @@ public class CenterAddParticipationController {
 //            System.out.println("No user selected.");
 //        }
 //    }
-}
+
