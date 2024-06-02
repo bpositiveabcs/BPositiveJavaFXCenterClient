@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="880.0" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bpos.centerclient.controllers.CenterAddParticipationController">
+<AnchorPane prefHeight="600.0" prefWidth="880.0" stylesheets="@buttonstyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bpos.centerclient.controllers.CenterAddParticipationController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="880.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@add participare.png" />
          </image></ImageView>
-      <TableView layoutX="27.0" layoutY="72.0" prefHeight="296.0" prefWidth="407.0">
+      <TableView fx:id="studentsTable" layoutX="27.0" layoutY="72.0" prefHeight="296.0" prefWidth="407.0">
         <columns>
-          <TableColumn prefWidth="118.4000244140625" text="Student" />
-          <TableColumn prefWidth="90.4000244140625" text="CNP" />
-            <TableColumn prefWidth="99.20001220703125" text="Department" />
-            <TableColumn prefWidth="42.39996337890625" text="Year" />
-            <TableColumn prefWidth="53.60002441406249" text="Group" />
+          <TableColumn fx:id="nameColumn" prefWidth="118.4000244140625" text="Student" />
+          <TableColumn fx:id="cnpColumn" prefWidth="90.4000244140625" text="CNP" />
+            <TableColumn fx:id="departmentColumn" prefWidth="99.20001220703125" text="Department" />
+            <TableColumn fx:id="yearColumn" prefWidth="42.39996337890625" text="Year" />
+            <TableColumn fx:id="groupColumn" prefWidth="53.60002441406249" text="Group" />
         </columns>
       </TableView>
       <Button fx:id="adddonationbutton" layoutX="414.0" layoutY="530.0" mnemonicParsing="false" text="Add donation">
@@ -34,16 +26,16 @@
             <Font name="Century Gothic" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="addmedicalinfo" layoutX="552.0" layoutY="530.0" mnemonicParsing="false" text="Add medical information " onAction="#handleUploadDocument">
+      <Button fx:id="addmedicalinfo" layoutX="552.0" layoutY="530.0" mnemonicParsing="false" onAction="#handleUploadDocument" text="Add medical information ">
          <font>
             <Font name="Century Gothic" size="16.0" />
          </font>
       </Button>
-      <TableView layoutX="451.0" layoutY="72.0" prefHeight="296.0" prefWidth="407.0">
+      <TableView fx:id="personsTable" layoutX="451.0" layoutY="72.0" prefHeight="296.0" prefWidth="407.0">
          <columns>
-            <TableColumn prefWidth="165.5999755859375" text="First Name" />
-            <TableColumn prefWidth="172.0" text="Last Name" />
-            <TableColumn minWidth="0.0" prefWidth="69.5999755859375" text="CNP" />
+            <TableColumn fx:id="firstNameColumn" prefWidth="165.5999755859375" text="First Name" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="172.0" text="Last Name" />
+            <TableColumn fx:id="cnpColumn2" minWidth="0.0" prefWidth="69.5999755859375" text="CNP" />
          </columns>
       </TableView>
       <Label layoutX="297.0" layoutY="389.0" text="Search for a specific user by CNP :">

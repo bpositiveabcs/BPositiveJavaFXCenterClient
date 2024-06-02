@@ -12,11 +12,11 @@
          <image>
             <Image url="@centre screen.png" />
          </image></ImageView>
-      <TableView layoutX="41.0" layoutY="84.0" prefHeight="486.0" prefWidth="529.0">
+      <TableView fx:id="eventsTable" layoutX="41.0" layoutY="84.0" prefHeight="486.0" prefWidth="529.0">
         <columns>
-          <TableColumn prefWidth="181.3999900817871" text="Event" />
-          <TableColumn prefWidth="145.00001525878906" text="Date" />
-            <TableColumn prefWidth="204.0" text="Description" />
+          <TableColumn fx:id="eventColumn" prefWidth="181.3999900817871" text="Event" />
+          <TableColumn fx:id="dateColumn" prefWidth="145.00001525878906" text="Date" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="204.0" text="Description" />
         </columns>
       </TableView>
       <Label layoutX="41.0" layoutY="46.0" text="Welcome to BPositive!">

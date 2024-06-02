@@ -4,6 +4,7 @@ import bpos.centerclient.CenterResponse;
 import bpos.common.model.Center;
 import bpos.common.model.Event;
 import bpos.common.model.Person;
+import bpos.common.model.Student;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +19,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +66,7 @@ public class ClientService {
            String responseBody = response.body();
            System.out.println(responseBody);
 
-           if (response.statusCode() == 200) {
+           if (response.statusCode()/100 == 2) {
                try {
                    ObjectMapper objectMapper = new ObjectMapper();
                    objectMapper.registerModule(new JavaTimeModule());
@@ -117,6 +119,87 @@ public class ClientService {
         }
         return null;
     }
+
+    public List<Event> allEventsForCenter(int centerId) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL2 + "/events/center-id-event?centruID=" + centerId))
+                .GET()
+                .build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            String responseBody = response.body();
+            System.out.println(responseBody);
+
+            // Deserialize the JSON array into a list of Event objects
+            List<Event> events = objectMapper.readValue(responseBody, new TypeReference<List<Event>>() {
+            });
+
+            return events;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Student> findAllStudents() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL2 + "/personActorService/students"))
+                .GET()
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            String responseBody = response.body();
+            System.out.println(responseBody);
+
+            // Deserialize the JSON array into a list of Student objects
+            List<Student> students = objectMapper.readValue(responseBody, new TypeReference<List<Student>>() {});
+            return students;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Person> findAllPersons() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL2 + "/personActorService/persons"))
+                .GET()
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        try {
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            String responseBody = response.body();
+            System.out.println(responseBody);
+
+            if (statusCode == 200) {
+                // Deserialize the JSON array into a list of Person objects
+                return objectMapper.readValue(responseBody, new TypeReference<List<Person>>() {});
+            } else {
+                System.err.println("Error fetching persons: " + statusCode);
+                return Collections.emptyList();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
 }
 
 
