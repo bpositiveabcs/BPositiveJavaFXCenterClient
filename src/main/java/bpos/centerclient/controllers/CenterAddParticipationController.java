@@ -122,6 +122,8 @@ public class CenterAddParticipationController {
 
     public void loadPersons() {
         List<Person> persons = clientService.findAllPersons();
+        persons.removeIf(person -> "Admin".equals(person.getPersonalDate().getFirstName()));
+
         if (persons != null && !persons.isEmpty()) {
             personList.setAll(persons);
             personsTable.setItems(personList);
