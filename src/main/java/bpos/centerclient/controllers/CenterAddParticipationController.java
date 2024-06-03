@@ -287,47 +287,64 @@ public class CenterAddParticipationController {
 
     @FXML
     private void handleaddDonation() {
-        String selectedType = tipcombo.getValue();
-        String pointsText = pointstextfield.getText();
-        if (selectedType != null && pointsText != null && !pointsText.isEmpty()) {
-            try {
-                int points = Integer.parseInt(pointsText);
+        Object selectedObject = null;
 
-                DonationType donationType = new DonationType();
-                switch (selectedType) {
-                    case "Transfuzie":
-                        donationType.setId(1);  // Set appropriate ID
-                        donationType.setName("Transfuzie");
-                        break;
-                    case "Trombocite":
-                        donationType.setId(2);  // Set appropriate ID
-                        donationType.setName("Trombocite");
-                        break;
-                    case "Plasma":
-                        donationType.setId(3);  // Set appropriate ID
-                        donationType.setName("Plasma");
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid donation type selected");
+        selectedObject = studentsTable.getSelectionModel().getSelectedItem();
+
+        if (selectedObject == null) {
+            selectedObject = personsTable.getSelectionModel().getSelectedItem();
+        }
+
+        if (selectedObject != null) {
+            Person person = (Person) selectedObject;
+
+            String selectedType = tipcombo.getValue();
+            String pointsText = pointstextfield.getText();
+            if (selectedType != null && pointsText != null && !pointsText.isEmpty()) {
+                try {
+                    int points = Integer.parseInt(pointsText);
+
+                    DonationType donationType = new DonationType();
+                    switch (selectedType) {
+                        case "Transfuzie":
+                            donationType.setId(1);  // Set appropriate ID
+                            donationType.setName("Transfuzie");
+                            break;
+                        case "Trombocite":
+                            donationType.setId(2);  // Set appropriate ID
+                            donationType.setName("Trombocite");
+                            break;
+                        case "Plasma":
+                            donationType.setId(3);  // Set appropriate ID
+                            donationType.setName("Plasma");
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Invalid donation type selected");
+                    }
+
+                    Donation donation = new Donation();
+                    donation.setDonationType(donationType);
+                    donation.setPoints(points);
+
+                    Donation savedDonation = clientService.addDonation(donation, person);
+                    if (savedDonation != null) {
+                        System.out.println("Donation added successfully");
+                    } else {
+                        System.out.println("Failed to add donation");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Points must be a valid number");
                 }
-
-                Donation donation = new Donation();
-                donation.setDonationType(donationType);
-                donation.setPoints(points);
-
-                Donation savedDonation = clientService.addDonation(donation);
-                if (savedDonation != null) {
-                    System.out.println("Donation added successfully");
-                } else {
-                    System.out.println("Failed to add donation");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Points must be a valid number");
+            } else {
+                System.out.println("Please select a donation type and enter points");
             }
         } else {
-            System.out.println("Please select a donation type and enter points");
+            System.out.println("No user selected.");
         }
     }
+
+
+
 
     @FXML
     private void handlereturn1(ActionEvent event) {

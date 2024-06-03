@@ -20,10 +20,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ClientService {
 
@@ -258,21 +255,25 @@ public class ClientService {
         return Collections.emptyList();
     }
 
-    public Donation addDonation(Donation donation) {
+    public Donation addDonation(Donation donation, Person person) {
         System.out.println(donation);
         String donationJson = null;
+        String personJson = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             donationJson = objectMapper.writeValueAsString(donation);
+            personJson = objectMapper.writeValueAsString(person);
         } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
 
+        String requestBody = "{ \"donation\": " + donationJson + ", \"person\": " + personJson + " }";
+
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL2 + "/donations"))
-                .method("POST", HttpRequest.BodyPublishers.ofString(donationJson))
+                .uri(URI.create(BASE_URL2 + "/donație"))
+                .method("POST", HttpRequest.BodyPublishers.ofString(requestBody))
                 .header("Content-Type", "application/json")
                 .build();
         System.out.println(request);
@@ -300,6 +301,8 @@ public class ClientService {
             throw new RuntimeException(ex);
         }
     }
+
+
 
     public void uploadFileToServer(File file, String username) {
         try {
