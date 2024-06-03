@@ -228,6 +228,14 @@ public class CenterMainController implements WebSocketMessageListener {
         stage.show();
 
     }
+
+    @FXML
+    private Button refreshbutton;
+
+    public void handlerefresh(ActionEvent event) {
+        refreshListEvents();
+    }
+
     @FXML
     private AnchorPane cartBtn;
 

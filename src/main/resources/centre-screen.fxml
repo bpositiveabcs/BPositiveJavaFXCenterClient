@@ -81,27 +81,6 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="logout" layoutX="683.0" layoutY="539.0" mnemonicParsing="false" onAction="#handlelogout" text="Log Out">
-         <font>
-            <Font name="Century Gothic Bold" size="18.0" />
-         </font>
-         <textFill>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.3803921639919281" green="0.08235294371843338" blue="0.08235294371843338" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.6313725709915161" green="0.007843137718737125" blue="0.21568627655506134" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </textFill>
-      </Button>
       <Button fx:id="addevent" layoutX="635.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleAddEvent" text="Add event">
          <font>
             <Font name="Century Gothic Bold" size="16.0" />
@@ -144,5 +123,6 @@
             </LinearGradient>
          </textFill>
       </Button>
+      <Button fx:id="refreshbutton" layoutX="645.0" layoutY="431.0" mnemonicParsing="false" onAction="#handlerefresh" text="Refresh" />
    </children>
 </AnchorPane>
