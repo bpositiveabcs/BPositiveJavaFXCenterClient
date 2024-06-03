@@ -1,6 +1,7 @@
 package bpos.centerclient.RestComunication.services;
 
 import bpos.centerclient.CenterResponse;
+import bpos.centerclient.DonationRequest;
 import bpos.common.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -255,47 +256,41 @@ public class ClientService {
         return Collections.emptyList();
     }
 
-    public Donation addDonation(Donation donation, Person person) {
+    public void  addDonation(Donation donation, Person person) {
         System.out.println(donation);
-        String donationJson = null;
-        String personJson = null;
+        String requestBody = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModule(new JavaTimeModule());
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-            donationJson = objectMapper.writeValueAsString(donation);
-            personJson = objectMapper.writeValueAsString(person);
+            DonationRequest donationRequest = new DonationRequest();
+            donationRequest.setDonation(donation);
+            donationRequest.setPerson(person);
+            requestBody = objectMapper.writeValueAsString(donationRequest);
         } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
 
-        String requestBody = "{ \"donation\": " + donationJson + ", \"person\": " + personJson + " }";
-
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL2 + "/donație"))
+                .uri(URI.create(BASE_URL2 + "/donation"))
                 .method("POST", HttpRequest.BodyPublishers.ofString(requestBody))
                 .header("Content-Type", "application/json")
                 .build();
         System.out.println(request);
 
-        HttpResponse<String> response = null;
         try {
-            response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             String responseBody = response.body();
             System.out.println(responseBody);
 
             if (response.statusCode() / 100 == 2) {
-                try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    objectMapper.registerModule(new JavaTimeModule());
-                    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-                    return objectMapper.readValue(responseBody, Donation.class);
-                } catch (JsonProcessingException ex) {
-                    throw new RuntimeException(ex);
-                }
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.registerModule(new JavaTimeModule());
+                objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                Map<String, String> responseMap = objectMapper.readValue(responseBody, new TypeReference<Map<String, String>>() {});
+                System.out.println("Success: " + responseMap.get("message"));
             } else {
                 System.err.println("Failed to save donation: " + response.body());
-                return null;
             }
         } catch (IOException | InterruptedException ex) {
             throw new RuntimeException(ex);

@@ -325,13 +325,14 @@ public class CenterAddParticipationController {
                     Donation donation = new Donation();
                     donation.setDonationType(donationType);
                     donation.setPoints(points);
+                    donation.setId(0);
 
-                    Donation savedDonation = clientService.addDonation(donation, person);
-                    if (savedDonation != null) {
-                        System.out.println("Donation added successfully");
-                    } else {
-                        System.out.println("Failed to add donation");
-                    }
+                    clientService.addDonation(donation, person);
+//                    if (savedDonation != null) {
+//                        System.out.println("Donation added successfully");
+//                    } else {
+//                        System.out.println("Failed to add donation");
+//                    }
                 } catch (NumberFormatException e) {
                     System.out.println("Points must be a valid number");
                 }
