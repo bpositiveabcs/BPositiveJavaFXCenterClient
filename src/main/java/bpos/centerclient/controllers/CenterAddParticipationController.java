@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CenterAddParticipationController {
 
@@ -260,14 +261,14 @@ public class CenterAddParticipationController {
             List<Person> foundPersons = clientService.findByCnpPerson(cnp);
             List<Student> foundStudents = clientService.findByCnpStudent(cnp);
 
-            if (foundPersons != null && !foundPersons.isEmpty()) {
-                personList.setAll(foundPersons);
-                personsTable.setItems(personList);
-                studentsTable.setItems(FXCollections.observableArrayList()); // Clear the student table
-            } else if (foundStudents != null && !foundStudents.isEmpty()) {
+            if (foundStudents != null && !foundStudents.isEmpty()) {
                 studentList.setAll(foundStudents);
                 studentsTable.setItems(studentList);
                 personsTable.setItems(FXCollections.observableArrayList()); // Clear the person table
+            }else if (foundPersons != null && !foundPersons.isEmpty()) {
+                personList.setAll(foundPersons);
+                personsTable.setItems(personList);
+                studentsTable.setItems(FXCollections.observableArrayList()); // Clear the student table
             } else {
                 System.out.println("No persons or students found with the given CNP.");
                 personsTable.setItems(FXCollections.observableArrayList()); // Clear the person table
@@ -277,6 +278,34 @@ public class CenterAddParticipationController {
             System.out.println("Please enter a CNP to search.");
         }
     }
+
+
+
+
+//    @FXML
+//    private void handleSearchByCnp() {
+//        String cnp = cnptextfield.getText();
+//        if (cnp != null && !cnp.isEmpty()) {
+//            List<Person> foundPersons = clientService.findByCnpPerson(cnp);
+//            List<Student> foundStudents = clientService.findByCnpStudent(cnp);
+//
+//            if (foundPersons != null && !foundPersons.isEmpty()) {
+//                personList.setAll(foundPersons);
+//                personsTable.setItems(personList);
+//                studentsTable.setItems(FXCollections.observableArrayList()); // Clear the student table
+//            } else if (foundStudents != null && !foundStudents.isEmpty()) {
+//                studentList.setAll(foundStudents);
+//                studentsTable.setItems(studentList);
+//                personsTable.setItems(FXCollections.observableArrayList()); // Clear the person table
+//            } else {
+//                System.out.println("No persons or students found with the given CNP.");
+//                personsTable.setItems(FXCollections.observableArrayList()); // Clear the person table
+//                studentsTable.setItems(FXCollections.observableArrayList()); // Clear the student table
+//            }
+//        } else {
+//            System.out.println("Please enter a CNP to search.");
+//        }
+//    }
 
     @FXML
     private void handleRevertSearch() {
@@ -349,12 +378,14 @@ public class CenterAddParticipationController {
 
     @FXML
     private void handlereturn1(ActionEvent event) {
+
+        loggedUser = Optional.of(centerLogged);
         // Închide fereastra curentă
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
 
         // Deschide fereastra anterioară (CenterMainController)
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/centre-main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/centre-screen.fxml"));
         Parent root = null;
         try {
             root = fxmlLoader.load();
@@ -363,7 +394,9 @@ public class CenterAddParticipationController {
         }
         CenterMainController controller = fxmlLoader.getController();
 
+        controller.setServer(clientService);
         controller.setCenter(stage, loggedUser.get()); // Setează utilizatorul și alte informații necesare
+
         stage.setTitle("Main Screen");
         stage.setScene(new Scene(root));
         stage.show();

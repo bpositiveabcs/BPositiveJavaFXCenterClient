@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,21 +75,63 @@ public class CenterMainController implements WebSocketMessageListener {
         eventsTable.setItems(eventList);
     }
 
+//    public void refreshListEvents() {
+//        //System.out.println(loggedUser.get());
+//        if (loggedUser.isPresent()) {
+//            Center center = loggedUser.get();
+//            this.eventList.clear();
+//
+//            Iterable<Event> events = clientService.allEventsForCenter(center.getId());
+//            for (Event event : events) {
+//                this.eventList.add(event);
+//            }
+//            eventsTable.setItems(eventList);
+//        } else {
+//            System.out.println("No logged-in user found.");
+//        }
+//    }
+//
     public void refreshListEvents() {
-        //System.out.println(loggedUser.get());
         if (loggedUser.isPresent()) {
             Center center = loggedUser.get();
             this.eventList.clear();
 
             Iterable<Event> events = clientService.allEventsForCenter(center.getId());
-            for (Event event : events) {
-                this.eventList.add(event);
-            }
+
+            events.forEach(event -> {
+                if (event.getEventStartDate().isAfter(LocalDateTime.of(0, 1, 1, 0, 0))) {
+                    this.eventList.add(event);
+                }
+            });
+
+            // Setarea listei de evenimente în tabel
             eventsTable.setItems(eventList);
-        } else {
-            System.out.println("No logged-in user found.");
         }
     }
+
+
+//    public void refreshListEvents() {
+//        if (loggedUser.isPresent()) {
+//            Center center = loggedUser.get();
+//            this.eventList.clear();
+//
+//            Iterable<Event> events = clientService.allEventsForCenter(center.getId());
+//
+//            events.forEach(event -> {
+//                if (!event.getEventStartDate().isEqual(LocalDateTime.of(0, 1, 1, 0, 0))) {
+//                    // Dacă data de început este "0000-01-01", setează stilul de text roșu
+//                    this.eventList.add(event);
+//                }
+//            });
+//
+//            // Setarea listei de evenimente în tabel
+//            eventsTable.setItems(eventList);
+//        }
+//    }
+
+
+
+
 
 //    @FXML
 //    public void initialize() {
